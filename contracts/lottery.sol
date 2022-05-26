@@ -9,9 +9,18 @@ contract Lottery {
     uint256 public minUsdEntry;
     AggregatorV3Interface internal ethUsdPriceFeed;
 
+    enum LOTTERY_STATE {
+        open,
+        close,
+        calculating_winner
+    }
+
+    LOTTERY_STATE public lotteryState;
+
     constructor(address _priceFeedAddress) public {
         minUsdEntry = 50 * (10**18);
         ethUsdPriceFeed = AggregatorV3Interface(_priceFeedAddress);
+        
     }
 
     function enterLottery() public payable {
